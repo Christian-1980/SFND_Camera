@@ -36,14 +36,24 @@ void magnitudeSobel()
     
 
     // compute magnitude image based on the equation presented in the lesson 
-    cv::Mat magnitude(dx.size(), CV_32F); // Create a float matrix for magnitude
+    cv::Mat magnitude(dx.size(), CV_8U); // Create a float matrix for magnitude
     for (int i = 0; i < dx.rows; i++) {
         for (int j = 0; j < dx.cols; j++) {
-            float dx_val = dx.at<float>(i, j);
-            float dy_val = dy.at<float>(i, j);
-            magnitude.at<float>(i, j) = std::sqrt(std::pow(dx_val, 2) + std::pow(dy_val, 2));
+            float dx_val = dx.at<unsigned char>(i, j);
+            float dy_val = dy.at<unsigned char>(i, j);
+            magnitude.at<unsigned char>(i, j) = std::sqrt(std::pow(dx_val, 2) + std::pow(dy_val, 2));
         }
     }
+
+    // cv::Mat magnitude = imgGray.clone();
+    // for (int r = 0; r < magnitude.rows; r++)
+    // {
+    //     for (int c = 0; c < magnitude.cols; c++)
+    //     {
+    //         magnitude.at<unsigned char>(r, c) = sqrt(pow(dx.at<unsigned char>(r, c), 2) +
+    //                                                  pow(dy.at<unsigned char>(r, c), 2));
+    //     }
+    // }
 
     // Convert magnitude to 8-bit for display
     cv::Mat magnitude_display;
